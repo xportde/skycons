@@ -9,8 +9,22 @@ lightweight, so they shouldn't rain on your parade:
     <canvas id="icon2" width="128" height="128"></canvas>
 
     <script>
+
+      // by default, icons are black but you can color them
       var skycons = new Skycons({"color": "pink"});
       // on Android, a nasty hack is needed: {"resizeClear": true}
+
+      // If you want to add more colors :
+      // var skycons = new Skycons({"monochrome": false});
+      // you can now customize the color of different parts
+      // main, moon, fog, cloud, snow, leaf, rain, sun
+      // var skycons = new Skycons({
+      //  "monochrome": false,
+      //  "colors" : {
+      //    "cloud" : "#F00"
+      //  }
+      //  });
+
 
       // you can add a canvas by it's ID...
       skycons.add("icon1", Skycons.PARTLY_CLOUDY_DAY);
