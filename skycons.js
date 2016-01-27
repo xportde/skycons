@@ -522,6 +522,51 @@
     }
   }
 
+  function thunderbolts(ctx, t, cx, cy, cw, color) {
+    t /= 1000;
+
+    var alpha = 1 - t % 1,
+        a = cw / 25,
+        b = Math.floor(t % 4),
+        x = x = cx + ((b - 1.5) / 1.5) * (b === 1 || b === 2 ? -1 : 1) * cw * 0.16,
+        y = cy;
+
+    ctx.fillStyle = color;
+    ctx.globalAlpha = alpha;
+
+    ctx.beginPath();
+    ctx.moveTo(x - a, y - a * 5);
+    ctx.lineTo(x - a * 3, y);
+    ctx.lineTo(x, y);
+    ctx.lineTo(x - a * 2, y + a * 5);
+    ctx.lineTo(x + a * 3, y - a);
+    ctx.lineTo(x, y - a);
+    ctx.lineTo(x + a * 2, y - a * 5);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.globalAlpha = 1;
+  }
+
+  function hail(ctx, t, cx, cy, cw, s, color) {
+    t /= 900;
+
+    var a = cw * 0.16,
+        i, p, x, y;
+
+    ctx.fillStyle = color;
+
+    for(i = 8; i--; ) {
+      p = (t + i / 8) % 1;
+      x = cx + ((i - 3) / 3) * (i === 1 || i === 3 || i === 4 || i === 6 ? -1 : 1) * a;
+      y = cy + p * p * cw;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.arc(x, y, s * 0.4, 0, 2 * Math.PI, false);
+      ctx.fill();
+    }
+  }
+
   var Skycons = function(opts) {
         this.list        = [];
         this.interval    = null;
@@ -550,8 +595,8 @@
         h = ctx.canvas.height,
         s = Math.min(w, h);
 
-    sun(ctx, t, w * 0.625, h * 0.375, s * 0.75, s * STROKE, color);
-    cloud(ctx, t, w * 0.375, h * 0.625, s * 0.75, s * STROKE, color);
+    sun(ctx, t, w * 0.625, h * 0.375, s * 0.75, s * STROKE * 0.9, color);
+    cloud(ctx, t, w * 0.375, h * 0.625, s * 0.75, s * STROKE * 0.9, color);
   };
 
   Skycons.PARTLY_CLOUDY_NIGHT = function(ctx, t, color) {
@@ -559,8 +604,8 @@
         h = ctx.canvas.height,
         s = Math.min(w, h);
 
-    moon(ctx, t, w * 0.667, h * 0.375, s * 0.75, s * STROKE, color);
-    cloud(ctx, t, w * 0.375, h * 0.625, s * 0.75, s * STROKE, color);
+    moon(ctx, t, w * 0.667, h * 0.375, s * 0.75, s * STROKE * 0.9, color);
+    cloud(ctx, t, w * 0.375, h * 0.625, s * 0.75, s * STROKE * 0.9, color);
   };
 
   Skycons.CLOUDY = function(ctx, t, color) {
@@ -580,13 +625,56 @@
     cloud(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
   };
 
+  Skycons.SHOWERS_DAY = function(ctx, t, color) {
+    var w = ctx.canvas.width,
+        h = ctx.canvas.height,
+        s = Math.min(w, h);
+
+    sun(ctx, t, w * 0.625, h * 0.325, s * 0.65, s * STROKE * 0.8, color);
+    rain(ctx, t, w * 0.375, h * 0.5, s * 0.7, s * STROKE * 0.9, color);
+    cloud(ctx, t, w * 0.375, h * 0.5, s * 0.7, s * STROKE * 0.9, color);
+  }
+
+  Skycons.SHOWERS_NIGHT = function(ctx, t, color) {
+    var w = ctx.canvas.width,
+        h = ctx.canvas.height,
+        s = Math.min(w, h);
+
+    moon(ctx, t, w * 0.667, h * 0.325, s * 0.75, s * STROKE * 0.8, color);
+    rain(ctx, t, w * 0.375, h * 0.5, s * 0.7, s * STROKE * 0.9, color);
+    cloud(ctx, t, w * 0.375, h * 0.5, s * 0.7, s * STROKE * 0.9, color);
+  }
+
   Skycons.SLEET = function(ctx, t, color) {
     var w = ctx.canvas.width,
         h = ctx.canvas.height,
         s = Math.min(w, h);
 
-    sleet(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
+    rain(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
+    snow(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
     cloud(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
+  };
+
+  Skycons.SLEET_SHOWERS_DAY = function(ctx, t, color) {
+    var w = ctx.canvas.width,
+        h = ctx.canvas.height,
+        s = Math.min(w, h);
+
+    sun(ctx, t, w * 0.625, h * 0.325, s * 0.65, s * STROKE * 0.8, color);
+    snow(ctx, t, w * 0.375, h * 0.5, s * 0.7, s * STROKE * 0.9, color);
+    rain(ctx, t, w * 0.375, h * 0.5, s * 0.7, s * STROKE * 0.9, color);
+    cloud(ctx, t, w * 0.375, h * 0.5, s * 0.7, s * STROKE * 0.9, color);
+  };
+
+  Skycons.SLEET_SHOWERS_NIGHT = function(ctx, t, color) {
+    var w = ctx.canvas.width,
+        h = ctx.canvas.height,
+        s = Math.min(w, h);
+
+    moon(ctx, t, w * 0.667, h * 0.325, s * 0.75, s * STROKE * 0.8, color);
+    snow(ctx, t, w * 0.375, h * 0.5, s * 0.7, s * STROKE * 0.9, color);
+    rain(ctx, t, w * 0.375, h * 0.5, s * 0.7, s * STROKE * 0.9, color);
+    cloud(ctx, t, w * 0.375, h * 0.5, s * 0.7, s * STROKE * 0.9, color);
   };
 
   Skycons.SNOW = function(ctx, t, color) {
@@ -597,6 +685,26 @@
     snow(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
     cloud(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
   };
+
+  Skycons.SNOW_SHOWERS_DAY = function(ctx, t, color) {
+    var w = ctx.canvas.width,
+        h = ctx.canvas.height,
+        s = Math.min(w, h);
+
+    sun(ctx, t, w * 0.625, h * 0.325, s * 0.65, s * STROKE * 0.8, color);
+    snow(ctx, t, w * 0.375, h * 0.5, s * 0.7, s * STROKE * 0.9, color);
+    cloud(ctx, t, w * 0.375, h * 0.5, s * 0.7, s * STROKE * 0.9, color);
+  }
+
+  Skycons.SNOW_SHOWERS_NIGHT = function(ctx, t, color) {
+    var w = ctx.canvas.width,
+        h = ctx.canvas.height,
+        s = Math.min(w, h);
+
+    moon(ctx, t, w * 0.667, h * 0.325, s * 0.75, s * STROKE * 0.8, color);
+    snow(ctx, t, w * 0.375, h * 0.5, s * 0.7, s * STROKE * 0.9, color);
+    cloud(ctx, t, w * 0.375, h * 0.5, s * 0.7, s * STROKE * 0.9, color);
+  }
 
   Skycons.WIND = function(ctx, t, color) {
     var w = ctx.canvas.width,
@@ -613,7 +721,7 @@
         s = Math.min(w, h),
         k = s * STROKE;
 
-    fogbank(ctx, t, w * 0.5, h * 0.32, s * 0.75, k, color);
+    fogbank(ctx, t, w * 0.5, h * 0.32, s * 0.75, k * 0.9, color);
 
     t /= 5000;
 
@@ -632,6 +740,56 @@
 
     line(ctx, a + w * 0.2 + k * 0.5, e, b + w * 0.8 - k * 0.5, e);
     line(ctx, c + w * 0.2 + k * 0.5, f, d + w * 0.8 - k * 0.5, f);
+  };
+
+  Skycons.THUNDER = function(ctx, t, color) {
+    var w = ctx.canvas.width,
+        h = ctx.canvas.height,
+        s = Math.min(w, h);
+
+    thunderbolts(ctx, t, w * 0.5, h * 0.825, s * 0.9, color)
+    cloud(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
+  };
+
+  Skycons.THUNDER_RAIN = function(ctx, t, color) {
+    var w = ctx.canvas.width,
+        h = ctx.canvas.height,
+        s = Math.min(w, h);
+
+    rain(ctx, t, w * 0.5, h * 0.5, s * 0.9, s * STROKE, color);
+    thunderbolts(ctx, t, w * 0.5, h * 0.825, s * 0.9, color)
+    cloud(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
+  };
+
+  Skycons.THUNDER_SHOWERS_DAY = function(ctx, t, color) {
+    var w = ctx.canvas.width,
+        h = ctx.canvas.height,
+        s = Math.min(w, h);
+
+    thunderbolts(ctx, t, w * 0.375, h * 0.85, s * 0.7, color)
+    sun(ctx, t, w * 0.625, h * 0.325, s * 0.65, s * STROKE * 0.8, color);
+    rain(ctx, t, w * 0.375, h * 0.5, s * 0.7, s * STROKE * 0.9, color);
+    cloud(ctx, t, w * 0.375, h * 0.5, s * 0.7, s * STROKE * 0.9, color);
+  };
+
+  Skycons.THUNDER_SHOWERS_NIGHT = function(ctx, t, color) {
+    var w = ctx.canvas.width,
+        h = ctx.canvas.height,
+        s = Math.min(w, h);
+
+    thunderbolts(ctx, t, w * 0.375, h * 0.85, s * 0.7, color)
+    moon(ctx, t, w * 0.667, h * 0.325, s * 0.75, s * STROKE * 0.8, color);
+    rain(ctx, t, w * 0.375, h * 0.5, s * 0.7, s * STROKE * 0.9, color);
+    cloud(ctx, t, w * 0.375, h * 0.5, s * 0.7, s * STROKE * 0.9, color);
+  };
+
+  Skycons.HAIL = function(ctx, t, color) {
+    var w = ctx.canvas.width,
+        h = ctx.canvas.height,
+        s = Math.min(w, h);
+
+    hail(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
+    cloud(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
   };
 
   Skycons.prototype = {
