@@ -650,12 +650,22 @@
         h = ctx.canvas.height,
         s = Math.min(w, h);
 
+    sleet(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
+    cloud(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
+  };
+
+  Skycons.RAIN_SNOW = function(ctx, t, color) {
+    var w = ctx.canvas.width,
+        h = ctx.canvas.height,
+        s = Math.min(w, h);
+
     rain(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
     snow(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
     cloud(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
   };
 
-  Skycons.SLEET_SHOWERS_DAY = function(ctx, t, color) {
+
+  Skycons.RAIN_SNOW_SHOWERS_DAY = function(ctx, t, color) {
     var w = ctx.canvas.width,
         h = ctx.canvas.height,
         s = Math.min(w, h);
@@ -666,7 +676,7 @@
     cloud(ctx, t, w * 0.375, h * 0.5, s * 0.7, s * STROKE * 0.9, color);
   };
 
-  Skycons.SLEET_SHOWERS_NIGHT = function(ctx, t, color) {
+  Skycons.RAIN_SNOW_SHOWERS_NIGHT = function(ctx, t, color) {
     var w = ctx.canvas.width,
         h = ctx.canvas.height,
         s = Math.min(w, h);
