@@ -322,7 +322,7 @@
         c = cw * 0.21,
         d = cw * 0.28;
 
-    ctx.fillStyle = color.fog || color;
+    ctx.fillStyle = color.fogbank || color;
     puffs(ctx, t, cx, cy, a, b, c, d);
 
     ctx.globalCompositeOperation = 'destination-out';
@@ -529,14 +529,15 @@
         this.monochrome = typeof(opts.monochrome) === "undefined" ? true :  opts.monochrome;
         opts.colors = opts.colors || {};
         this.colors = {
-            main  : opts.colors.main || "#111",
-            moon  : opts.colors.moon || "#353545",
-            fog   : opts.colors.fog  || "#AAA",
-            cloud : opts.colors.cloud|| "#666",
-            snow  : opts.colors.snow || "#C2EEFF",
-            leaf  : opts.colors.leaf || "#2C5228",
-            rain  : opts.colors.rain || "#7FDBFF",
-            sun   : opts.colors.sun  || "#FFDC00"
+            main    : opts.colors.main    || "#111",
+            moon    : opts.colors.moon    || "#353545",
+            fog     : opts.colors.fog     || "#CCC",
+            fogbank : opts.colors.fogbank || "#AAA",
+            cloud   : opts.colors.cloud   || "#666",
+            snow    : opts.colors.snow    || "#C2EEFF",
+            leaf    : opts.colors.leaf    || "#2C5228",
+            rain    : opts.colors.rain    || "#7FDBFF",
+            sun     : opts.colors.sun     || "#FFDC00"
         };
         if(this.monochrome) {
             this.color = opts.color || this.colors.main;

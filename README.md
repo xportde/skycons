@@ -17,7 +17,7 @@ lightweight, so they shouldn't rain on your parade:
       // If you want to add more colors :
       // var skycons = new Skycons({"monochrome": false});
       // you can now customize the color of different parts
-      // main, moon, fog, cloud, snow, leaf, rain, sun
+      // main, moon, fog, fogbank, cloud, snow, leaf, rain, sun
       // var skycons = new Skycons({
       //  "monochrome": false,
       //  "colors" : {
