@@ -1,6 +1,8 @@
 Skycons
 =======
 
+[Preview them here](https://maxdow.github.io/skycons/)
+
 Skycons is a set of twenty two animated weather glyphs, procedurally generated
 by JavaScript using the HTML5 canvas tag. They're easy to use, and pretty
 lightweight, so they shouldn't rain on your parade:
