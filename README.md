@@ -23,7 +23,7 @@ lightweight, so they shouldn't rain on your parade:
       // thunder, snow, hail, sleet, wind, leaf, rain, sun
       // var skycons = new Skycons({
       //  "monochrome": false,
-      //  "colors" : {
+      //  "color" : {
       //    "cloud" : "#F00"
       //  }
       //  });
